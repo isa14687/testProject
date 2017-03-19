@@ -1,0 +1,7 @@
+language: android
+jdk: oraclejdk8
+sudo: false
+
+script:
+    ./gradlew clean
+    ./gradlew build

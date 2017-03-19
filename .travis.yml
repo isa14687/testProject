@@ -14,20 +14,22 @@ android:
   - extra-google-m2repository
   - extra-android-support
 
-
 before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+  - chmod +x gradlew
+  - ./gradlew dependencies || true
+
+before_script:
   - echo y | sudo apt-get update
   - echo y | sudo apt-get install openjdk-7-jre
-  - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0 | grep 'package installed'
-  - echo y | android update sdk --no-ui --all --filter extra-android-support | grep 'package installed'
-  - echo y | android update sdk --no-ui --all --filter extra-android-m2repository | grep 'package installed'
-  - echo y | android update sdk --no-ui --all --filter extra-google-m2repository | grep 'package installed'
-  - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services | grep 'package installed'
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - export JAVA_HOME=$JAVA8_HOME
   - chmod +x gradlew
+
 script:
-   - ./gradlew clean
-   - ./gradlew build
+  - ./gradlew clean
+  - ./gradlew build
 
